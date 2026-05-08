@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Download — Latentic Lab</title>
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  html, body { margin:0; padding:0; min-height:100vh; background:#0a0a0a; color:#e5e5e5;
+    font-family: ui-monospace, "JetBrains Mono", "IBM Plex Mono", Menlo, monospace;
+    line-height: 1.5; }
+  body { padding:24px; }
+  main { max-width: 640px; margin: 80px auto; }
+  h1 { font-weight: 400; font-size: 28px; letter-spacing: -0.02em; margin: 0 0 24px;
+    color: #fafafa; }
+  h2 { font-weight: 400; font-size: 18px; margin: 32px 0 12px; color: #c4c4c4; }
+  p { margin: 0 0 14px; }
+  .status { padding: 16px; border: 1px solid #333; border-radius: 6px; margin: 24px 0;
+    background: #141414; }
+  .status-ok { border-color: #2d7a3d; background: #122218; }
+  .status-pending { border-color: #5a4a1a; background: #221c10; }
+  .status-error { border-color: #7a2d2d; background: #221212; }
+  .label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em;
+    color: #888; margin-bottom: 6px; }
+  button, .btn { background: #f5f5f5; color: #0a0a0a; border: 0; padding: 12px 22px;
+    border-radius: 4px; font-family: inherit; font-size: 15px; cursor: pointer;
+    text-decoration: none; display: inline-block; margin-top: 8px; }
+  button:hover, .btn:hover { background: #fff; }
+  button:disabled { background: #333; color: #777; cursor: not-allowed; }
+  code { background: #1a1a1a; padding: 2px 6px; border-radius: 3px; font-size: 13px; }
+  .small { font-size: 13px; color: #999; }
+  .err { color: #ff8a8a; }
+  .ok { color: #6ee78a; }
+  a { color: #6ee78a; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Latentic Lab — Download</h1>
+
+  <div id="initial">
+    <p class="small">Verifying payment status…</p>
+    <div class="status" id="status">
+      <div class="label">Status</div>
+      <div id="status-text">loading</div>
+    </div>
+  </div>
+
+  <div id="ready" style="display:none;">
+    <div class="status status-ok">
+      <div class="label">Payment</div>
+      <div class="ok">✓ Confirmed</div>
+      <div class="small" style="margin-top:6px;">Your file is ready. Click below to download.</div>
+    </div>
+    <button id="download-btn">Download package</button>
+    <p class="small" style="margin-top:18px;">
+      You can re-download this file <span id="dl-remaining">3</span> more times.
+      If your download fails, refresh and try again.
+    </p>
+  </div>
+
+  <div id="pending" style="display:none;">
+    <div class="status status-pending">
+      <div class="label">Payment status</div>
+      <div id="pending-text">Pending confirmation on the blockchain</div>
+      <div class="small" style="margin-top:6px;">
+        This typically takes 30 seconds to a few minutes depending on the network you used.
+        We'll auto-check every 10 seconds.
+      </div>
+    </div>
+  </div>
+
+  <div id="error" style="display:none;">
+    <div class="status status-error">
+      <div class="label">Issue</div>
+      <div class="err" id="error-text">Something went wrong</div>
+      <div class="small" style="margin-top:8px;">
+        Contact the seller if this persists. Reference your invoice ID:
+        <code id="error-invoice"></code>
+      </div>
+    </div>
+  </div>
+
+  <h2>Files</h2>
+  <p class="small">Anti-piracy: each invoice can be used to download up to 3 times. Resharing
+    this URL gives others nothing — they need the invoice ID, and the counter is
+    enforced server-side.</p>
+</main>
+
+<script>
+(function () {
+  // Configuration
+  // Deno Deploy worker URL (deployed via console.deno.com playground)
+  const WORKER_URL = "https://sales-worker.omnyapex.deno.net";
+
+  const params = new URLSearchParams(location.search);
+  const invoice = params.get("invoice") || params.get("NP_id") || params.get("payment_id");
+  const product = params.get("product") || "item1";
+
+  const initial = document.getElementById("initial");
+  const ready = document.getElementById("ready");
+  const pending = document.getElementById("pending");
+  const error = document.getElementById("error");
+  const statusText = document.getElementById("status-text");
+  const errorText = document.getElementById("error-text");
+  const errorInvoice = document.getElementById("error-invoice");
+  const dlRemaining = document.getElementById("dl-remaining");
+  const downloadBtn = document.getElementById("download-btn");
+
+  function show(node) {
+    [initial, ready, pending, error].forEach(n => n.style.display = "none");
+    node.style.display = "block";
+  }
+
+  function showError(message) {
+    errorText.textContent = message;
+    errorInvoice.textContent = invoice || "(missing)";
+    show(error);
+  }
+
+  if (!invoice) {
+    showError("No invoice ID in URL. Did you arrive here from a payment page?");
+    return;
+  }
+
+  let pollTimer = null;
+
+  async function checkStatus() {
+    try {
+      const url = `${WORKER_URL}/status?invoice=${encodeURIComponent(invoice)}`;
+      const res = await fetch(url);
+      const data = await res.json();
+
+      if (!res.ok) {
+        showError(data.error || `Server error ${res.status}`);
+        return;
+      }
+
+      const status = (data.payment_status || "").toLowerCase();
+      if (status === "finished" || status === "confirmed" || status === "sending") {
+        const remaining = (data.downloads_max || 3) - (data.downloads_used || 0);
+        if (remaining <= 0) {
+          showError("This invoice has reached its download limit. Contact the seller.");
+          return;
+        }
+        dlRemaining.textContent = remaining;
+        downloadBtn.onclick = () => {
+          const dl = `${WORKER_URL}/get?invoice=${encodeURIComponent(invoice)}&product=${encodeURIComponent(product)}`;
+          window.location.href = dl;
+        };
+        show(ready);
+        if (pollTimer) clearInterval(pollTimer);
+      } else if (status === "waiting" || status === "confirming" || status === "partially_paid") {
+        statusText.textContent = "Payment pending — " + (data.payment_status || status);
+        show(pending);
+      } else {
+        showError(`Unexpected payment status: ${data.payment_status}`);
+      }
+    } catch (e) {
+      showError("Network error while checking status: " + e.message);
+    }
+  }
+
+  // First check immediately
+  checkStatus();
+  // Then poll every 10s while pending
+  pollTimer = setInterval(checkStatus, 10000);
+})();
+</script>
+</body>
+</html>
