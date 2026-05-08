@@ -4,194 +4,28 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
-<title>omnyapex — AI assets</title>
+<title>omnyapex</title>
 <style>
-  :root { color-scheme: dark; }
-  * { box-sizing: border-box; }
-  html, body { margin:0; padding:0; min-height:100vh; background:#0a0a0a; color:#e5e5e5;
-    font-family: ui-monospace, "JetBrains Mono", "IBM Plex Mono", Menlo, monospace;
-    line-height: 1.5; font-size: 15px; }
-  body { padding: 24px; }
-  main { max-width: 720px; margin: 60px auto; }
-  h1 { font-weight: 400; font-size: 26px; letter-spacing: -0.02em; margin: 0 0 8px;
-    color: #fafafa; }
-  .tag { font-size: 12px; color: #888; text-transform: uppercase; letter-spacing: 0.12em;
-    margin-bottom: 40px; }
-  h2 { font-weight: 400; font-size: 18px; margin: 40px 0 14px; color: #c4c4c4;
-    border-top: 1px solid #1f1f1f; padding-top: 28px; }
-  p { margin: 0 0 12px; }
-  .small { font-size: 13px; color: #999; }
-  .muted { color: #888; }
-  code { background: #1a1a1a; padding: 2px 6px; border-radius: 3px; font-size: 13px;
-    color: #c4c4c4; word-break: break-all; }
-  a { color: #6ee78a; }
-
-  .product { border: 1px solid #1f1f1f; border-radius: 8px; padding: 20px 22px;
-    margin-bottom: 16px; background: #111; }
-  .product-head { display: flex; justify-content: space-between; align-items: baseline;
-    flex-wrap: wrap; gap: 12px; margin-bottom: 8px; }
-  .product-title { font-size: 17px; color: #fafafa; }
-  .price { font-size: 20px; color: #6ee78a; }
-  .slug { font-size: 12px; color: #5a5a5a; }
-  .product ul { margin: 10px 0 0; padding-left: 18px; color: #999; font-size: 13px; }
-  .product li { margin-bottom: 4px; }
-
-  .wallets { display: grid; grid-template-columns: 1fr; gap: 8px; }
-  .wallet { display: flex; align-items: center; gap: 10px; padding: 10px 14px;
-    background: #111; border: 1px solid #1f1f1f; border-radius: 6px;
-    font-size: 13px; }
-  .wallet-meta { flex: 0 0 130px; }
-  .wallet-net { display: block; font-size: 11px; color: #777; margin-top: 2px;
-    text-transform: uppercase; letter-spacing: 0.06em; }
-  .wallet-addr { flex: 1; overflow: hidden; text-overflow: ellipsis;
-    white-space: nowrap; color: #c4c4c4; }
-  .copy-btn { flex: 0 0 auto; padding: 6px 12px; background: #1f1f1f; color: #c4c4c4;
-    border: 1px solid #2a2a2a; border-radius: 4px; cursor: pointer; font: inherit;
-    font-size: 12px; }
-  .copy-btn:hover { background: #2a2a2a; color: #fafafa; }
-  .copy-btn.copied { background: #122218; border-color: #2d7a3d; color: #6ee78a; }
-
-  .steps ol { padding-left: 22px; }
-  .steps li { margin-bottom: 10px; }
-  .contact-box { padding: 16px 18px; background: #111; border: 1px solid #1f1f1f;
-    border-radius: 8px; margin-top: 12px; }
-  .footer { margin-top: 60px; padding-top: 24px; border-top: 1px solid #1f1f1f;
-    color: #666; font-size: 12px; }
+:root { color-scheme: dark; }
+* { box-sizing: border-box; }
+html, body { margin:0; padding:0; min-height:100vh; background:#0a0a0a; color:#bfbfbf;
+  font-family: ui-monospace, "JetBrains Mono", "IBM Plex Mono", Menlo, monospace;
+  line-height: 1.6; font-size: 14px; }
+body { padding: 24px; display: flex; align-items: center; justify-content: center; }
+main { max-width: 440px; width: 100%; }
+h1 { font-weight: 400; font-size: 22px; letter-spacing: 0.02em; margin: 0 0 8px; color: #f0f0f0; }
+.tag { font-size: 11px; color: #666; text-transform: uppercase; letter-spacing: 0.14em; margin-bottom: 32px; }
+p { margin: 0 0 14px; color: #999; }
+.footer { margin-top: 40px; padding-top: 16px; border-top: 1px solid #1a1a1a; color: #555; font-size: 11px; }
 </style>
 </head>
 <body>
 <main>
-  <h1>omnyapex — AI assets</h1>
-  <div class="tag">Standalone digital goods · crypto only · email delivery</div>
-
-  <h2>Products</h2>
-
-  <div class="product">
-    <div class="product-head">
-      <div>
-        <div class="product-title">ComfyUI character-consistency workflow</div>
-        <div class="slug">slug: <code>item1</code></div>
-      </div>
-      <div class="price">$29</div>
-    </div>
-    <p class="muted small">SDXL Lightning + IP-Adapter-FaceID + AnimateLCM-XL.
-      Identity-locked 6-second video generation from photo references. Byte-deterministic outputs.</p>
-    <ul>
-      <li>ComfyUI workflow JSON (drop-in)</li>
-      <li>dna_compute.py helper script</li>
-      <li>README + license</li>
-      <li>15 KB ZIP</li>
-      <li>License: commercial use, no resale</li>
-    </ul>
-  </div>
-
-  <div class="product">
-    <div class="product-head">
-      <div>
-        <div class="product-title">AI tech-studio brand identity pack</div>
-        <div class="slug">slug: <code>item3</code></div>
-      </div>
-      <div class="price">$149</div>
-    </div>
-    <p class="muted small">Complete editable brand identity for an AI/tech studio:
-      logo system, color palette, typography, application examples.</p>
-    <ul>
-      <li>PowerPoint editable + PDF guidelines</li>
-      <li>Logo variants (full, mark, monochrome)</li>
-      <li>Color tokens + typography spec</li>
-      <li>40 MB ZIP</li>
-      <li>License: full commercial use rights for buyer, no resale</li>
-    </ul>
-  </div>
-
-  <h2>How to buy</h2>
-  <div class="steps">
-    <ol>
-      <li>Pick a product (note its <code>slug</code>: <code>item1</code> or <code>item3</code>).</li>
-      <li>Pay the exact USD-equivalent in any of the supported cryptocurrencies below
-        to the matching wallet address. Use the network shown.</li>
-      <li>Email <a href="mailto:omnyapex@proton.me">omnyapex@proton.me</a> with subject
-        <code>order: [slug]</code> and include in the body:
-        the network used, the transaction hash, and your delivery email.</li>
-      <li>You'll receive the ZIP file as an email attachment within 24 hours after
-        the transaction confirms on chain.</li>
-    </ol>
-  </div>
-  <p class="small muted">Pricing is in USD. For crypto amount, convert at the time of payment
-    using a market rate (CoinGecko, etc.) and round up to nearest 1 cent. If the amount differs
-    by more than 5%, we may follow up to confirm.</p>
-
-  <h2>Wallet addresses</h2>
-  <div class="wallets">
-    <div class="wallet">
-      <div class="wallet-meta">USDT<span class="wallet-net">Tron / TRC-20</span></div>
-      <div class="wallet-addr" data-addr="TNtEHA6ypnjGBsjQ53LK6Kf4eQWq84YTXq">TNtEHA6ypnjGBsjQ53LK6Kf4eQWq84YTXq</div>
-      <button class="copy-btn">copy</button>
-    </div>
-    <div class="wallet">
-      <div class="wallet-meta">USDT<span class="wallet-net">Polygon</span></div>
-      <div class="wallet-addr" data-addr="0x7BF99985f4a0e6423e62e3616b02a0bFc954F281">0x7BF99985f4a0e6423e62e3616b02a0bFc954F281</div>
-      <button class="copy-btn">copy</button>
-    </div>
-    <div class="wallet">
-      <div class="wallet-meta">USDC<span class="wallet-net">Polygon</span></div>
-      <div class="wallet-addr" data-addr="0x7BF99985f4a0e6423e62e3616b02a0bFc954F281">0x7BF99985f4a0e6423e62e3616b02a0bFc954F281</div>
-      <button class="copy-btn">copy</button>
-    </div>
-    <div class="wallet">
-      <div class="wallet-meta">ETH<span class="wallet-net">Ethereum</span></div>
-      <div class="wallet-addr" data-addr="0x7BF99985f4a0e6423e62e3616b02a0bFc954F281">0x7BF99985f4a0e6423e62e3616b02a0bFc954F281</div>
-      <button class="copy-btn">copy</button>
-    </div>
-    <div class="wallet">
-      <div class="wallet-meta">BTC<span class="wallet-net">Bitcoin</span></div>
-      <div class="wallet-addr" data-addr="bc1q7vgu7mnepdpmc38fc7h60whj8546d67fn38d3y">bc1q7vgu7mnepdpmc38fc7h60whj8546d67fn38d3y</div>
-      <button class="copy-btn">copy</button>
-    </div>
-    <div class="wallet">
-      <div class="wallet-meta">SOL<span class="wallet-net">Solana</span></div>
-      <div class="wallet-addr" data-addr="CR8kphjNweVhnthWB7Pdnpngt5a7hZBBjpqKHvg4mujG">CR8kphjNweVhnthWB7Pdnpngt5a7hZBBjpqKHvg4mujG</div>
-      <button class="copy-btn">copy</button>
-    </div>
-  </div>
-
-  <h2>Contact</h2>
-  <div class="contact-box">
-    Email: <a href="mailto:omnyapex@proton.me">omnyapex@proton.me</a><br>
-    <span class="small muted">Replies within 24 hours. ProtonMail.</span>
-  </div>
-
-  <h2>Terms</h2>
-  <p class="small muted">Digital goods. Once delivered, no refunds. License is per-buyer and
-    non-transferable. Resale is prohibited. Commercial use within your own products and
-    services is allowed. Files are delivered as-is, no warranty. For technical issues with
-    the files, contact the email above and we will assist.</p>
-
-  <div class="footer">
-    omnyapex · 2026 · No KYC, no accounts, no recurring charges.
-  </div>
+  <h1>omnyapex</h1>
+  <div class="tag">Status — under reorganization</div>
+  <p>This site is being rebuilt. Prior published materials have been removed.</p>
+  <p>The next version of this page will appear here when it's ready.</p>
+  <div class="footer">© 2026 · omnyapex · independent project</div>
 </main>
-
-<script>
-(function () {
-  document.querySelectorAll(".copy-btn").forEach(function (btn) {
-    btn.addEventListener("click", async function () {
-      var addr = btn.parentElement.querySelector(".wallet-addr").dataset.addr;
-      try {
-        await navigator.clipboard.writeText(addr);
-        var prev = btn.textContent;
-        btn.textContent = "copied";
-        btn.classList.add("copied");
-        setTimeout(function () {
-          btn.textContent = prev;
-          btn.classList.remove("copied");
-        }, 1500);
-      } catch (e) {
-        btn.textContent = "err";
-      }
-    });
-  });
-})();
-</script>
 </body>
 </html>
